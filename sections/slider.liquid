@@ -1,0 +1,166 @@
+<section class="slider">
+  <div class="top_section-slider">
+    <div class="top_section_slider-slide_track">
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_1 }}" alt="Image 1">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_2 }}" alt="Image 2">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_3 }}" alt="Image 3">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_4 }}" alt="Image 4">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_5 }}" alt="Image 5">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_6 }}" alt="Image 6">
+      </div>
+    </div>
+    <div class="top_section_slider-slide_track">
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_1 }}" alt="Image 1">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_2 }}" alt="Image 2">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_3 }}" alt="Image 3">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_4 }}" alt="Image 4">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_5 }}" alt="Image 5">
+      </div>
+      <div class="top_section_slider-slide_track-slide">
+        <img src="{{ section.settings.image_6 }}" alt="Image 6">
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .slider {
+    margin-top: 64px;
+  }
+
+  .top_section-slider {
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+  }
+
+  .top_section_slider-slide_track {
+    display: flex;
+  }
+
+  .top_section_slider-slide_track:nth-child(1) {
+    animation: loop 50s -25s linear infinite;
+  }
+
+  .top_section_slider-slide_track:nth-child(2) {
+    animation: loop2 50s linear infinite;
+  }
+
+  .top_section_slider-slide_track-slide {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .top_section_slider-slide_track-slide img {
+    width: 80%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  @keyframes loop {
+    0% {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes loop2 {
+    0% {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-200%);
+    }
+  }
+
+  @media only screen and (min-width: 600px) and(max-width: 768px) {
+    .top_section_title {
+      font-size: 2rem;
+    }
+
+    .top_section_description {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .top_section_title {
+      font-size: 2rem;
+    }
+
+    .top_section_description {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .top_section_slider-slide_track-slide {
+      width: 150px;
+      height: 150px;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Top Section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image_1",
+        "label": "Image 1",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/character1.avif"
+      }, {
+        "type": "image_picker",
+        "id": "image_2",
+        "label": "Image 2",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/character2.avif"
+      }, {
+        "type": "image_picker",
+        "id": "image_3",
+        "label": "Image 3",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/character3.avif"
+      }, {
+        "type": "image_picker",
+        "id": "image_4",
+        "label": "Image 4",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/character4.avif"
+      }, {
+        "type": "image_picker",
+        "id": "image_5",
+        "label": "Image 5",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/character5.avif"
+      }, {
+        "type": "image_picker",
+        "id": "image_6",
+        "label": "Image 6",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/character6.avif"
+      }
+    ]
+  }
+{% endschema %}

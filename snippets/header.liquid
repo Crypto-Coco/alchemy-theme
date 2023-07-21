@@ -1,0 +1,57 @@
+<header class="header">
+  <img class="header-logo" src="{{ settings.header_logo }}" />
+
+  <nav class="nav">
+    <a href="{{ settings.opensea_link  }}">
+      <img class="header-icon" src="{{ "opensea-icon-white.svg" | asset_url }}" />
+    </a>
+    <a href="{{ settings.twitter_link  }}">
+      <img class="header-icon" src="{{ "twitter.svg" | asset_url }}" />
+    </a>
+    <a href="{{ settings.discord_link  }}">
+      <img class="header-icon" src="{{ "discord.svg" | asset_url }}" />
+    </a>
+
+    <a class="header-txt" href="#mint">Mint</a>
+    <a class="header-txt" href="#roadmap">Roadmap</a>
+    <a class="header-txt" href="#team">Team</a>
+    <a class="header-txt" href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<style>
+  .header {
+    padding: 20px var(--margin-main-dekstop);
+    width: 100vw;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 150;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-logo {
+    width: auto;
+    height: 42px;
+    display: block;
+  }
+
+  .header-icon {
+    height: 22px;
+    width: 22px;
+  }
+
+  .header .nav {
+    display: flex;
+    align-items: center;
+    gap: 42px;
+  }
+
+  .header-txt {
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+  }
+</style>

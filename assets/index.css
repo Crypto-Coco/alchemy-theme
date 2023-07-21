@@ -1,0 +1,55 @@
+:root {
+  --margin-main-dekstop: 64px;
+  --margin-main-mobile: 32px;
+  --linear-gradient: linear-gradient(165deg, #AF40FF 0%, rgba(91, 66, 242, 0.84) 42.19%, rgba(0, 221, 235, 0.50) 100%);
+  --rounded-lg: 16px;
+  --gray: #EEE;
+  --text-description-color: #6B6B6B;
+  --line-primary: #CFCFCF;
+}
+
+body {
+  margin: 0;
+  color: #3a3a3a;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.section-title {
+  font-size: 60px;
+  font-weight: bold;
+  background: var(--linear-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent
+}
+
+.section-title-center {
+  text-align: center;
+  margin-bottom: 62px;
+}
+
+.gradient-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--linear-gradient);
+  font-size: 26px;
+  font-weight: 500;
+  border-radius: var(--rounded-lg);
+  border: none;
+  color: white;
+  padding: 14px 108px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-position: 1% 50%;
+  background-size: 200% auto;
+}
+
+.gradient-button:hover {
+  background-position: 45% 50%;
+}
