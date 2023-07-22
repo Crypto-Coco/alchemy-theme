@@ -18,10 +18,10 @@
       <h2 class="media-block-title section-title">
         {{ title }}
       </h2>
-      <div class="media-block-subtitle">
+      <div class="media-block-subtitle text-md font-semibold">
         {{ subtitle }}
       </div>
-      <p class="media-block-description">
+      <p class="media-block-description text-sm font-regular">
         {{ description }}
       </p>
     </div>
@@ -60,13 +60,10 @@
   }
 
   .media-block-subtitle {
-    font-size: 20px;
     margin-bottom: 20px;
-    font-weight: 700;
   }
 
   .media-block-description {
-    font-size: 20px;
     margin: 0;
   }
 
@@ -85,7 +82,7 @@
 
   @media screen and (max-width: 576px) {
     .media-block {
-      flex-direction: column;
+      flex-direction: column-reverse;
     }
 
     .media-block-image {

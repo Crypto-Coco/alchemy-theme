@@ -7,8 +7,8 @@
       <div class="mint-info-container">
         <div class="top">
           {%- comment -%}TODO: 動的に{%- endcomment -%}
-          <div class="mint-date">Mint ends 2023, July 18 at 11:00 PM JST</div>
-          <div class="mint-number">{{ condition.supplyClaimed }} / {{ condition.maxClaimableSupply }}</div>
+          <div class="mint-date text-lg font-bold">Mint ends 2023, July 18 at 11:00 PM JST</div>
+          <div class="mint-number text-2xl font-bold">{{ condition.supplyClaimed }} / {{ condition.maxClaimableSupply }}</div>
 
           <div class="bar-box">
             {% assign bar_width = condition.supplyClaimed | divided_by: condition.maxClaimableSupply | times: 100 %}
@@ -105,14 +105,10 @@
   }
 
   .mint-date {
-    font-size: 24px;
-    font-weight: 700;
     margin-bottom: 32px;
   }
 
   .mint-number {
-    font-size: 48px;
-    font-weight: 700;
     margin-bottom: 22px;
   }
 
@@ -253,12 +249,35 @@
       gap: 32px;
     }
 
+    .bar-box {
+      width: 100%;
+    }
+
     .featured-image {
       width: 100%;
     }
 
     .mint-info-container .top {
       margin-bottom: 48px;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .mint {
+      padding: 32px var(--margin-main-mobile);
+    }
+
+    .mint-form {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .number-input-box {
+      width: 100%;
+    }
+
+    .gradient-button {
+      width: 100%;
     }
   }
 </style>

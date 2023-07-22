@@ -88,9 +88,9 @@
     font-weight: 400;
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 768px) {
     .hero {
-      min-height: calc(80vw);
+      min-height: calc(100vh);
     }
 
     .hero-video {
@@ -111,6 +111,16 @@
 
     .hero-txt-container p {
       font-size: 1.4rem;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .hero-txt-container h1 {
+      font-size: 2.4rem;
+    }
+
+    .hero-txt-container p {
+      font-size: 1rem;
     }
   }
 </style>

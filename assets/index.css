@@ -17,6 +17,7 @@ html {
 body {
   margin: 0;
   color: #3a3a3a;
+  overflow-x: hidden;
 }
 
 * {
@@ -72,6 +73,14 @@ body {
   font-size: 2rem;
 }
 
+.text-xl {
+  font-size: 2.5rem;
+}
+
+.text-2xl {
+  font-size: 3.5rem;
+}
+
 .font-regular {
   font-weight: 400;
 }
@@ -100,4 +109,47 @@ body {
   .text-lg {
     font-size: 1.6rem;
   }
+
+  .text-xl {
+    font-size: 2.0rem;
+  }
+  
+  .text-2xl {
+    font-size: 3.0rem;
+  }
+
+  .section-title-center {
+    margin-bottom: 48px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .section-title {
+    font-size: 2.4rem;
+  }
+
+  .text-sm {
+    font-size: 1rem;
+  }
+
+  .text-md {
+    font-size: 1.2rem;
+  }
+
+  .text-lg {
+    font-size: 1.4rem;
+  }
+
+  .text-xl {
+    font-size: 1.8rem;
+  }
+  
+  .text-2xl {
+    font-size: 2.5rem;
+  }
+
+  .section-title-center {
+    margin-bottom: 32px;
+  }
+
 }
