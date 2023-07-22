@@ -1,0 +1,112 @@
+<section class="media">
+  {% render 'media-block',
+    fluffy1_color: section.settings.first_fluffy_color1,
+    fluffy2_color: section.settings.second_fluffy_color1,
+    left_image: section.settings.is_left_image1,
+    image: section.settings.image1,
+    title: section.settings.title1,
+    subtitle: section.settings.subtitle1,
+    description: section.settings.description1
+  %}
+  {% render 'media-block',
+    fluffy1_color: section.settings.first_fluffy_color2,
+    fluffy2_color: section.settings.second_fluffy_color2,
+    left_image: section.settings.is_left_image2,
+    image: section.settings.image2,
+    title: section.settings.title2,
+    subtitle: section.settings.subtitle2,
+    description: section.settings.description2
+  %}
+</section>
+
+{% schema %}
+  {
+    "name": "Media Block",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "is_left_image1",
+        "label": "Is Left Image 1",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "image1",
+        "label": "Image 1",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/character1.avif"
+      },
+      {
+        "type": "text",
+        "id": "title1",
+        "label": "Title 1",
+        "default": "Hello Skyborne!"
+      },
+      {
+        "type": "text",
+        "id": "subtitle1",
+        "label": "Subtitle 1",
+        "default": "Nexian Gems is a Proof of Collective within the Skyborne Legacy ecosystem."
+      },
+      {
+        "type": "text",
+        "id": "description1",
+        "label": "Description 1",
+        "default": "These limited gems hold significant value and provide holders with special privileges. Holders gain access to a whitelist for future Skyborne mints, ensuring early access to new collectibles. The collection will include ten 1-of-1s of ultra rare, mythic rarity which will come with additional utility to be revealed closer to game launch."
+      },
+      {
+        "type": "color_picker",
+        "id": "first_fluffy_color1",
+        "label": "First Fluffy Color 1",
+        "default": "#B5A5E0"
+      },
+      {
+        "type": "color_picker",
+        "id": "second_fluffy_color1",
+        "label": "Second Fluffy Color",
+        "default": "#BADAF1"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_left_image2",
+        "label": "Is Left Image 2",
+        "default": "false"
+      },
+      {
+        "type": "image_picker",
+        "id": "image2",
+        "label": "Image 2",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/skyborne-legacy.avif"
+      },
+      {
+        "type": "text",
+        "id": "title2",
+        "label": "Title 2",
+        "default": "Skyborne Phoenix Flight"
+      },
+      {
+        "type": "text",
+        "id": "subtitle2",
+        "label": "Subtitle 2",
+        "default": "Nexian Gems is a Proof of Collective within the Skyborne Legacy ecosystem."
+      },
+      {
+        "type": "text",
+        "id": "description2",
+        "label": "Description 2",
+        "default": "These limited gems hold significant value and provide holders with special privileges. Holders gain access to a whitelist for future Skyborne mints, ensuring early access to new collectibles. The collection will include ten 1-of-1s of ultra rare, mythic rarity which will come with additional utility to be revealed closer to game launch."
+      },
+      {
+        "type": "color_picker",
+        "id": "first_fluffy_color2",
+        "label": "First Fluffy Color 2",
+        "default": "#BADAF1"
+      },
+      {
+        "type": "color_picker",
+        "id": "second_fluffy_color2",
+        "label": "Second Fluffy Color",
+        "default": "#E3F1BA"
+      }
+    ]
+  }
+{% endschema %}
