@@ -11,6 +11,41 @@
     ]
   },
   {
+    "name": "Footer",
+    "settings": [
+      {
+        "label": "Footer Title",
+        "id": "footer_title",
+        "type": "text",
+        "default": "Skyborne"
+      },
+      {
+        "label": "Footer Description",
+        "id": "footer_description",
+        "type": "text",
+        "default": "Alice is a digital art collection and global community of creators, developers, entrepreneurs, athletes, artists, experimenters and innovators."
+      },
+      {
+        "label": "Footer Right Text",
+        "id": "footer_right_text",
+        "type": "text",
+        "default": "Follow us"
+      },
+      {
+        "label": "Footer Copyright",
+        "id": "footer_copyright",
+        "type": "text",
+        "default": "@2023 Nexian Gems"
+      },
+      {
+        "label": "Footer Color",
+        "id": "footer_color",
+        "type": "color_picker",
+        "default": "#515DD0"
+      }
+    ]
+  },
+  {
     "name": "Collection",
     "settings": [
       {
