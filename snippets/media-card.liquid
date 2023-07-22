@@ -1,0 +1,46 @@
+<div class="media-card">
+  <img class="media-image" src="{{ image }}" />
+
+  <div class="media-card-right">
+    <h3 class="media-title">{{ title }}</h3>
+    <div class="media-subtitle">{{ subtitle }}</div>
+    <p class="media-description">{{ description }}</p>
+  </div>
+</div>
+
+<style>
+  .media-card {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding: 48px;
+    border-radius: var(--rounded-lg);
+    box-shadow: 0px 3px 4px 0px rgba(153, 155, 168, 0.25);
+    background-color: white;
+  }
+
+  .media-image {
+    width: 162px;
+    height: auto;
+    border-radius: var(--rounded-lg);
+    object-fit: cover;
+  }
+
+  .media-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  .media-subtitle {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  .media-description {
+    font-size: 16px;
+    font-weight: 400;
+    width: 70%;
+  }
+</style>

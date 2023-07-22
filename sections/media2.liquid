@@ -1,0 +1,125 @@
+<section class="media2">
+  <h2 class="section-title section-title-center">{{ section.settings.title }}</h2>
+
+  <div class="media2-cards">
+    {% render 'media-card',
+      title: section.settings.card_title1,
+      subtitle: section.settings.card_subtitle1,
+      description: section.settings.card_description1,
+      image: section.settings.card_image1
+    %}
+    {% render 'media-card',
+      title: section.settings.card_title2,
+      subtitle: section.settings.card_subtitle2,
+      description: section.settings.card_description2,
+      image: section.settings.card_image2
+    %}
+    {% render 'media-card',
+      title: section.settings.card_title3,
+      subtitle: section.settings.card_subtitle3,
+      description: section.settings.card_description3,
+      image: section.settings.card_image3
+    %}
+  </div>
+</section>
+
+<style>
+  .media2 {
+    background-color: #F9F9FF;
+    padding: 96px var(--margin-main-dekstop);
+  }
+
+  .media2-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 48px;
+    gap: 48px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Roadmap"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image1",
+      "label": "Card Image 1",
+      "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/roadmap1.avif"
+    },
+    {
+      "type": "text",
+      "id": "card_title1",
+      "label": "Card Title 1",
+      "default": "Season 1"
+    },
+    {
+      "type": "text",
+      "id": "card_subtitle1",
+      "label": "Card Subtitle 1",
+      "default": "Skyborne Genesis"
+    },
+    {
+      "type": "text",
+      "id": "card_description1",
+      "label": "Card Description 1",
+      "default": "A prologue set within the Skyborne universe that invites you to embark on quests, explore an engaging world, gather valuable resources, and collect rare digital collectibles. Early participants in this mini-game will earn rewards, transferable to its future full-fledged titles."
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image2",
+      "label": "Card Image 2",
+      "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/roadmap2.avif"
+    },
+    {
+      "type": "text",
+      "id": "card_title2",
+      "label": "Card Title 2",
+      "default": "Season 2"
+    },
+    {
+      "type": "text",
+      "id": "card_subtitle2",
+      "label": "Card Subtitle 2",
+      "default": "Skyborne Phoenix Flight"
+    },
+    {
+      "type": "text",
+      "id": "card_description2",
+      "label": "Card Description 2",
+      "default": "A social simulation, fantasy adventure mobile game where you can create and design your very own island in the Skyborne Legacy world."
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image3",
+      "label": "Card Image 3",
+      "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/roadmap3.avif"
+    },
+    {
+      "type": "text",
+      "id": "card_title3",
+      "label": "Card Title 3",
+      "default": "Season 3"
+    },
+    {
+      "type": "text",
+      "id": "card_subtitle3",
+      "label": "Card Subtitle 3",
+      "default": "Skyborne Legacy"
+    },
+    {
+      "type": "text",
+      "id": "card_description3",
+      "label": "Card Description 3",
+      "default": "A social world exploration and trading MMORPG where you can explore, create, customize, and battle."
+    }
+  ]
+}
+{% endschema %}
