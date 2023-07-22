@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -8,11 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&family=Inter:wght@400;500;600;700&family=Manrope:wght@200;300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600&family=Outfit:wght@700&display=swap" rel="stylesheet">
 
     {{ content_for_header }}
-    </head>
-    <body>
-      {{ content_for_layout }}
-
-      <script src="{{ 'index.js' | asset_url }}" type="module"></script>
-    </body>
   </head>
+  <body>
+    {{ content_for_layout }}
+
+    <script src="{{ 'index.js' | asset_url }}" type="module"></script>
+  </body>
 </html>
