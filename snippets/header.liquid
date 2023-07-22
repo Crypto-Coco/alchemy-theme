@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header" id="header">
   <img class="header-logo" src="{{ settings.header_logo }}" />
 
   <nav class="nav">
@@ -54,4 +54,20 @@
     color: white;
     text-decoration: none;
   }
+
+  .header.scrolled {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease-in-out;
+  }
 </style>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const header = document.getElementById('header');
+    if (window.scrollY > 80) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+</script>

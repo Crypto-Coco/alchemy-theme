@@ -9,6 +9,10 @@
   --line-primary: #CFCFCF;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   color: #3a3a3a;

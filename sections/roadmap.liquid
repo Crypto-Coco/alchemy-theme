@@ -1,7 +1,7 @@
-<section class="media2">
+<section class="roadmap" id="roadmap">
   <h2 class="section-title section-title-center">{{ section.settings.title }}</h2>
 
-  <div class="media2-cards">
+  <div class="roadmap-cards">
     {% render 'media-card',
       title: section.settings.card_title1,
       subtitle: section.settings.card_subtitle1,
@@ -24,12 +24,12 @@
 </section>
 
 <style>
-  .media2 {
+  .roadmap {
     background-color: #F9F9FF;
     padding: 96px var(--margin-main-dekstop);
   }
 
-  .media2-cards {
+  .roadmap-cards {
     display: flex;
     flex-direction: column;
     justify-content: center;
