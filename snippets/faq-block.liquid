@@ -1,0 +1,82 @@
+<div class="faq-block" id="faq-block">
+  <div class="question">
+    <h3 class="question-text">
+      {{ question }}
+    </h3>
+
+    <button class="open-close-button">
+      <img src="{{ 'chevron-down.svg' | asset_url }}" class="open-close-icon" />
+    </button>
+  </div>
+
+  <div class="answer" id="answer">
+    <p class="answer-text">
+      {{ answer  }}
+    </p>
+  </div>
+</div>
+
+<style>
+  .faq-block {
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--line-primary);
+  }
+
+  .question {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    align-items: center;
+    margin-bottom: 24px;
+    border-radius: var(--rounded-md);
+  }
+
+  .question:hover {
+    cursor: pointer;
+    background-color: rgba(64, 64, 64, 0.10);
+  }
+
+  .question-text {
+    font-size: 24px;
+    font-weight: 500;
+    width: 100%;
+  }
+
+  .open-close-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 999px;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .open-close-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .open-close-icon.open {
+    transform: rotate(180deg);
+  }
+
+  .answer {
+    display: none;
+    margin-bottom: 24px;
+    padding: 0 16px;
+  }
+
+  .answer-text {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .answer.open {
+    display: block;
+  }
+</style>

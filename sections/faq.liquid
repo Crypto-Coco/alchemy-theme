@@ -1,0 +1,87 @@
+<section class="faq-section">
+  <h2 class="section-title section-title-center">Questions</h2>
+
+  <div class="faq-blocks">
+    {% render 'faq-block', 
+      question: section.settings.question1,
+      answer: section.settings.answer1
+    %}
+    {% render 'faq-block', 
+      question: section.settings.question2,
+      answer: section.settings.answer2
+    %}
+    {% render 'faq-block', 
+      question: section.settings.question3,
+      answer: section.settings.answer3
+    %}
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding: 96px var(--margin-main-dekstop);
+  }
+
+  .faq-blocks {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 48px;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.faq-block .question').forEach((button) => {
+    button.addEventListener('click', function() {
+      const faqBlock = this.parentElement;
+      const answer = faqBlock.querySelector('.answer');
+      const icon = this.querySelector('.open-close-icon');
+      answer.classList.toggle('open');
+      icon.classList.toggle('open');
+    });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "FAQ",
+    "settings": [
+      {
+        "type": "text",
+        "id": "question1",
+        "label": "Question 1",
+        "default": "What is the cost to mint?"
+      },
+      {
+        "type": "text",
+        "id": "answer1",
+        "label": "Answer 1",
+        "default": "Minting is FREE! However, please note that you'll need to cover gas fees."
+      },
+      {
+        "type": "text",
+        "id": "question2",
+        "label": "Question 2",
+        "default": "Do I pay gas fees when minting?"
+      },
+      {
+        "type": "text",
+        "id": "answer2",
+        "label": "Answer 2",
+        "default": "Yes. Gas fees occur for any transaction or attempted transaction on the blockchain including a mint. The amount will vary depending on a variety of factors such as how many people are using the network at that moment. OpenSea does not control gas prices, nor does it receive or profit from them, and OpenSea is not able to refund gas fees. You'll pay gas fees even if you weren't able to successfully mint."
+      },
+      {
+        "type": "text",
+        "id": "question3",
+        "label": "Question 3",
+        "default": "What will I receive when I mint?"
+      },
+      {
+        "type": "text",
+        "id": "answer3",
+        "label": "Answer 3",
+        "default": "Every successful mint gives you one Nexian Gem and three Genesis Immortals."
+      }
+    ]
+  }
+{% endschema %}
+```
