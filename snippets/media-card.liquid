@@ -2,9 +2,9 @@
   <img class="media-image" src="{{ image }}" />
 
   <div class="media-card-right">
-    <h3 class="media-title">{{ title }}</h3>
-    <div class="media-subtitle">{{ subtitle }}</div>
-    <p class="media-description">{{ description }}</p>
+    <h3 class="text-md font-semibold media-title">{{ title }}</h3>
+    <div class="text-lg font-semibold media-subtitle">{{ subtitle }}</div>
+    <p class="text-sm font-regular media-description">{{ description }}</p>
   </div>
 </div>
 
@@ -24,23 +24,33 @@
     height: auto;
     border-radius: var(--rounded-lg);
     object-fit: cover;
+    flex-shrink: 0;
   }
 
   .media-title {
-    font-size: 20px;
-    font-weight: 600;
     margin-bottom: 18px;
   }
 
   .media-subtitle {
-    font-size: 32px;
-    font-weight: 600;
     margin-bottom: 18px;
   }
 
   .media-description {
-    font-size: 16px;
-    font-weight: 400;
     width: 70%;
+  }
+
+  @media screen and (max-width: 768px) {
+    .media-card {
+      gap: 32px;
+    }
+
+    .media-image {
+      width: 98px;
+      height: 98px;
+    }
+    
+    .media-description {
+      width: 100%;
+    }
   }
 </style>

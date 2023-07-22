@@ -21,7 +21,7 @@
 
 <style>
   .header {
-    padding: 20px var(--margin-main-dekstop);
+    padding: 20px var(--margin-main-desktop);
     width: 100vw;
     text-align: center;
     position: sticky;
@@ -58,6 +58,16 @@
   .header.scrolled {
     background-color: rgba(0, 0, 0, 0.5);
     transition: background-color 0.3s ease-in-out;
+  }
+
+  @media screen and (max-width: 768px) {
+    .header {
+      padding: 20px var(--margin-main-tablet);
+    }
+
+    .header .nav {
+      gap: 24px;
+    }
   }
 </style>
 

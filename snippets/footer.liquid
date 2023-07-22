@@ -34,7 +34,7 @@
   }
 
   .footer-top {
-    padding: 0 var(--margin-main-dekstop);
+    padding: 0 var(--margin-main-desktop);
     padding-bottom: 64px;
     display: flex;
     justify-content: space-between;
@@ -78,5 +78,14 @@
 
   .footer-copyright {
     text-align: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    .footer-top {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 48px;
+    }
   }
 </style>

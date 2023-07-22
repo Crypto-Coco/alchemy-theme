@@ -72,12 +72,25 @@
 
   @media screen and (max-width: 768px) {
     .media-block {
+      gap: 32px;
+      align-items: flex-start;
+      flex-direction: row-reverse;
+    }
+
+    .media-block-image {
+      width: 30%;
+      margin-bottom: 32px;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .media-block {
       flex-direction: column;
     }
 
     .media-block-image {
       width: 100%;
-      margin: 0 0 50px 0;
+      margin-bottom: 32px;
     }
   }
 

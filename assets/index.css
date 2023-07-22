@@ -1,5 +1,6 @@
 :root {
-  --margin-main-dekstop: 64px;
+  --margin-main-desktop: 64px;
+  --margin-main-tablet: 48px;
   --margin-main-mobile: 32px;
   --linear-gradient: linear-gradient(165deg, #AF40FF 0%, rgba(91, 66, 242, 0.84) 42.19%, rgba(0, 221, 235, 0.50) 100%);
   --rounded-lg: 16px;
@@ -57,4 +58,46 @@ body {
 
 .gradient-button:hover {
   background-position: 45% 50%;
+}
+
+.text-sm {
+  font-size: 1.25rem;
+}
+
+.text-md {
+  font-size: 1.5rem;
+}
+
+.text-lg {
+  font-size: 2rem;
+}
+
+.font-regular {
+  font-weight: 400;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+  .section-title {
+    font-size: 2.8rem;
+  }
+
+  .text-sm {
+    font-size: 1rem;
+  }
+
+  .text-md {
+    font-size: 1.2rem;
+  }
+
+  .text-lg {
+    font-size: 1.6rem;
+  }
 }

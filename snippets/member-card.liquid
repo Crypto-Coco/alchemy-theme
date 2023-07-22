@@ -3,12 +3,15 @@
 
   <div class="member-card-info">
     <div>
-      <h3 class="member-card-name">{{ name }}</h3>
-      <p class="member-card-title">{{ title }}</p>
+      <h3 class="member-card-name text-md font-bold">{{ name }}</h3>
+      <p class="member-card-title text-sm font-regular">{{ title }}</p>
     </div>
-    <a class="member-card-twitter-link" href="https://twitter.com/{{ twitter_id }}" target="_blank">
-      <img class="member-card-twitter-icon" src="{{ "twitter-black.svg" | asset_url }}" />
-    </a>
+
+    {% if twitter_id != null %}
+      <a class="member-card-twitter-link" href="https://twitter.com/{{ twitter_id }}" target="_blank">
+        <img class="member-card-twitter-icon" src="{{ "twitter-black.svg" | asset_url }}" />
+      </a>
+    {% endif %}
   </div>
 </div>
 
@@ -17,6 +20,7 @@
     background: white;
     border-radius: var(--rounded-lg);
     padding: 24px;
+    width: min-content;
   }
 
   .member-card-image {
@@ -34,14 +38,10 @@
   }
 
   .member-card-name {
-    font-size: 20px;
-    font-weight: 700;
     margin-bottom: 12px;
   }
 
   .member-card-title {
-    font-size: 14px;
-    font-weight: 400;
     color: var(--text-description-color);
   }
 
@@ -58,5 +58,11 @@
     width: 21px;
     height: 21px;
     fill: #393939;
+  }
+
+  @media screen and (max-width: 768px) {
+    .member-card-image {
+      width: 216px;
+    }
   }
 </style>
