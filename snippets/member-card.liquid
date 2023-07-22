@@ -1,0 +1,62 @@
+<div class="member-card">
+  <img class="member-card-image" src="{{ image }}" />
+
+  <div class="member-card-info">
+    <div>
+      <h3 class="member-card-name">{{ name }}</h3>
+      <p class="member-card-title">{{ title }}</p>
+    </div>
+    <a class="member-card-twitter-link" href="https://twitter.com/{{ twitter_id }}" target="_blank">
+      <img class="member-card-twitter-icon" src="{{ "twitter-black.svg" | asset_url }}" />
+    </a>
+  </div>
+</div>
+
+<style>
+  .member-card {
+    background: white;
+    border-radius: var(--rounded-lg);
+    padding: 24px;
+  }
+
+  .member-card-image {
+    border-radius: var(--rounded-lg);
+    width: 254px;
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 24px;
+  }
+
+  .member-card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .member-card-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .member-card-title {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-description-color);
+  }
+
+  .member-card-twitter-link {
+    background-color: var(--gray);
+    border-radius: 999px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .member-card-twitter-icon {
+    width: 21px;
+    height: 21px;
+    fill: #393939;
+  }
+</style>

@@ -1,0 +1,123 @@
+<section class="team-section">
+  <h2 class="team-title">Team</h2>
+
+  <div class="team-cards">
+    {% render 'member-card',
+      image: section.settings.card_image1,
+      name: section.settings.card_name1,
+      title: section.settings.card_title1,
+      twitter_id: section.settings.card_twitter_id1,
+    %}
+    {% render 'member-card',
+      image: section.settings.card_image2,
+      name: section.settings.card_name2,
+      title: section.settings.card_title2,
+      twitter_id: section.settings.card_twitter_id2,
+    %}
+    {% render 'member-card',
+      image: section.settings.card_image3,
+      name: section.settings.card_name3,
+      title: section.settings.card_title3,
+      twitter_id: section.settings.card_twitter_id3,
+    %}
+  </div>
+</section>
+
+<style>
+  .team-section {
+    background: var(--linear-gradient);
+    padding: 96px var(--margin-main-dekstop);
+  }
+
+  .team-title {
+    text-align: center;
+    color: white;
+    font-size: 60px;
+    font-weight: 700;
+  }
+
+  .team-cards {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+    flex-wrap: wrap;
+    gap: 64px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Team",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "card_image1",
+      "label": "Member Image 1",
+      "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/member1.avif"
+    },
+    {
+      "type": "text",
+      "id": "card_name1",
+      "label": "Member Name 1",
+      "default": "Member Name A"
+    },
+    {
+      "type": "text",
+      "id": "card_title1",
+      "label": "Member Title 1",
+      "default": "Director of Product"
+    },
+    {
+      "type": "text",
+      "id": "card_twitter_id1",
+      "label": "Member Twitter ID 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image2",
+      "label": "Member Image 2",
+      "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/member2.avif"
+    },
+    {
+      "type": "text",
+      "id": "card_name2",
+      "label": "Member Name 2",
+      "default": "Member Name B"
+    },
+    {
+      "type": "text",
+      "id": "card_title2",
+      "label": "Member Title 2",
+      "default": "Director of Engineering"
+    },
+    {
+      "type": "text",
+      "id": "card_twitter_id2",
+      "label": "Member Twitter ID 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image3",
+      "label": "Member Image 3",
+      "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/member3.avif"
+    },
+    {
+      "type": "text",
+      "id": "card_name3",
+      "label": "Member Name 3",
+      "default": "Member Name C"
+    },
+    {
+      "type": "text",
+      "id": "card_title3",
+      "label": "Member Title 3",
+      "default": "Director of Marketing"
+    },
+    {
+      "type": "text",
+      "id": "card_twitter_id3",
+      "label": "Member Twitter ID 3"
+    }
+  ]
+}
+{% endschema %}
