@@ -10,7 +10,6 @@
     {% fetch condition = getClaimConditionById, chain_id: "{{ settings.primary_collection.chain.id }}", contract_address: "{{ settings.primary_collection.contract_address }}" | args: '{{ activeConditionId }}' %}
       <div class="mint-info-container">
         <div class="top">
-          {%- comment -%}TODO: 動的に{%- endcomment -%}
           <div class="mint-date text-lg font-bold">{{ section.settings.end_date }}</div>
           <div class="mint-number text-2xl font-bold" id="supply">--</div>
 
@@ -58,6 +57,9 @@
                 Connect Wallet
               </button>
             {% else %}
+              {% comment %}
+                // TODO: Disconnect
+              {% endcomment %}
               <form class="mint-form" onsubmit="mint">
                 <div class="number-input-box">
                   <button id="decrement-button" class="number-input-button">
@@ -71,6 +73,7 @@
 
                 <button class="gradient-button" id="mint-button" type="submit">
                   Mint
+                  <span class="loader" style="display: none;"></span>
                 </button>
 
                 <button class="gradient-button" id="disconnect-button" type="button">
@@ -354,6 +357,7 @@
     try {
       e.preventDefault()
       btn.disabled = true
+      btn.querySelector('.loader').style.display = 'inline-block'
 
       // TODO: チェーンが違う場合にハンドリング
 
@@ -387,6 +391,9 @@
     } catch (err) {
       // TODO: エラーハンドリング
       console.log("err", err)
+    } finally {
+      btn.disabled = false
+      btn.querySelector('.loader').style.display = 'none'
     }
   }
 
