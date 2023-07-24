@@ -58,6 +58,10 @@ body {
   position: relative;
 }
 
+.gradient-button.loading {
+  opacity: 0.4;
+}
+
 .gradient-button:hover {
   background-position: 45% 50%;
 }

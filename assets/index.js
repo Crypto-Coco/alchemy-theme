@@ -65,7 +65,7 @@ watchAccount((account) => {
 
 watchNetwork((network) => {
   console.log(network)
-  if (network) {
+  if (network.chain) {
     document.cookie = `chainId=${network.chain.id}; path=/;`;
   } else {
     document.cookie = `chainId=; path=/;`;

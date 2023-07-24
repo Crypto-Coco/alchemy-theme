@@ -29,58 +29,44 @@
           </div>
 
           <div class="description">
+            {%- comment -%}TODO: 残りのミントできる個数を表示 & number inputの上限のバリデーションも変更{%- endcomment -%}
             <p>Limit {{ condition.quantityLimitPerWallet }} per wallet</p>
           </div>
         </div>
 
         <div class="bottom">
-          {% if connected_wallet != null %}
-            <div class="connected-wallet">
-              <div class="left-box">
-                <img src="{{ 'wallet.svg' | asset_url }}" class="wallet-icon" />
-                <div>
-                  {{ connected_wallet.address | omit_address }}
-                </div>
-              </div>
-
-              <div class="divider"></div>
-
-              <div class="right-box" id="balance">
-                -- MATIC
-              </div>
+          <div class="connected-wallet" id="connected-wallet" style="display: none;">
+            <div class="left-box">
+              <img src="{{ 'wallet.svg' | asset_url }}" class="wallet-icon" />
+              <div class="connected-wallet-address"></div>
             </div>
-          {% endif %}
 
-          <div>
-            {% if connected_wallet == null %}
-              <button class="gradient-button" id="connect-button">
-                Connect Wallet
+            <div class="divider"></div>
+
+            <div class="right-box" id="balance"></div>
+          </div>
+
+          <div id="actions">
+            <button class="gradient-button" id="connect-button">
+              Connect Wallet
+            </button>
+
+            <form class="mint-form" onsubmit="mint" style="display: none;">
+              <div class="number-input-box">
+                <button id="decrement-button" class="number-input-button">
+                  <img class="number-input-button-icon" src="{{ 'minus.svg' | asset_url }}" />
+                </button>
+                <input id="mint-number-input" class="number-input" min="1" max="{{ condition.quantityLimitPerWallet }}" type="number" />
+                <button id="increment-button" class="number-input-button">
+                  <img class="number-input-button-icon" src="{{ 'plus.svg' | asset_url }}" />
+                </button>
+              </div>
+
+              <button class="gradient-button" id="mint-button" type="submit">
+                Mint
+                <span class="loader" style="display: none;"></span>
               </button>
-            {% else %}
-              {% comment %}
-                // TODO: Disconnect
-              {% endcomment %}
-              <form class="mint-form" onsubmit="mint">
-                <div class="number-input-box">
-                  <button id="decrement-button" class="number-input-button">
-                    <img class="number-input-button-icon" src="{{ 'minus.svg' | asset_url }}" />
-                  </button>
-                  <input id="mint-number-input" class="number-input" min="1" max="{{ condition.quantityLimitPerWallet }}" type="number" />
-                  <button id="increment-button" class="number-input-button">
-                    <img class="number-input-button-icon" src="{{ 'plus.svg' | asset_url }}" />
-                  </button>
-                </div>
-
-                <button class="gradient-button" id="mint-button" type="submit">
-                  Mint
-                  <span class="loader" style="display: none;"></span>
-                </button>
-
-                <button class="gradient-button" id="disconnect-button" type="button">
-                  Disconnect
-                </button>
-              </form>
-            {% endif %}
+            </form>
           </div>
         </div>
       </div>
@@ -171,6 +157,11 @@
     width: fit-content;
     gap: 24px;
     margin-bottom: 32px;
+    cursor: pointer;
+  }
+
+  .connected-wallet:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   .wallet-icon {
@@ -187,7 +178,7 @@
   .connected-wallet .divider {
     width: 1px;
     height: 29px;
-    background: black;
+    background: var(--line-primary);
   }
 
   .mint-form {
@@ -309,28 +300,64 @@
     watchAccount,
     watchPublicClient,
     getPublicClient,
-    disconnect
+    disconnect,
+    getNetwork,
+    switchNetwork
   } = WagmiCore;
+  import { web3Modal } from "{{ 'index.js' | asset_url }}"
   const btn = document.getElementById('mint-button');
 
   const abi = {{ settings.primary_collection.abi }}
   const chainId = {{ settings.primary_collection.chain.id }}
-  let contract;
   let condition;
 
-  async function setContract() {
+  async function handleConnectedWallet(account) {
     try {
-      const walletClient = await getWalletClient()
-      if (walletClient) {
-        contract = getContract({
-          address: '{{ settings.primary_collection.contract_address }}',
-          abi
-        }, walletClient);
+      const connectedWallet = document.getElementById('connected-wallet');
+      if (account.address) {
+        // Get balance
+        const balance = document.getElementById('balance');
+        const address = account.address
+        console.log("address", address)
+        const res = await fetchBalance({
+          address,
+          chainId
+        })
+
+        // Display wallet
+        const omittedAddress = account.address.slice(0, 6) + '...' + account.address.slice(-4);
+        connectedWallet.style.display = 'flex';
+        connectedWallet.querySelector('.connected-wallet-address').innerText = omittedAddress;          
+        balance.innerText = `${Math.ceil(Number(res.value) / 10 ** 18 * 1000) / 1000} MATIC`
+
+        connectedWallet.addEventListener('click', async () => {
+          await web3Modal.openModal()
+        }) 
+      } else {
+        connectedWallet.style.display = 'none';
       }
     } catch (err) {
-      console.log("err", err)
+      console.error(err)
     }
   }
+
+  function handleActionsSection(account) {
+    try {
+      if (account.address) {
+        const connectButton = document.getElementById('connect-button');
+        const mintForm = document.querySelector('.mint-form');
+        connectButton.style.display = 'none';
+        mintForm.style.display = 'flex';
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  watchAccount(async (account) => {
+    await handleConnectedWallet(account)
+    handleActionsSection(account)
+  })
 
   async function initialize() {
     try {
@@ -358,8 +385,15 @@
       e.preventDefault()
       btn.disabled = true
       btn.querySelector('.loader').style.display = 'inline-block'
+      btn.classList.add('loading')
 
-      // TODO: チェーンが違う場合にハンドリング
+      const currentChain = await getNetwork()
+      if (currentChain.chain.id !== Number(chainId)) {
+        const network = await switchNetwork({
+          chainId,
+        })
+        return
+      }
 
       const walletClient = await getWalletClient()
       const address = await walletClient.account.address
@@ -394,6 +428,7 @@
     } finally {
       btn.disabled = false
       btn.querySelector('.loader').style.display = 'none'
+      btn.classList.remove('loading')
     }
   }
 
@@ -426,37 +461,7 @@
     });
   }
 
-  async function setBalance() {
-    try {
-      const balance = document.getElementById('balance');
-      const walletClient = await getWalletClient()
-      const address = await walletClient.account.address
-      const res = await fetchBalance({
-        address
-      })
-      balance.innerText = `${Math.ceil(Number(res.value) / 10 ** 18 * 1000) / 1000} MATIC`
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
   await initialize()
-
-  watchAccount(async (account) => {
-    if (account.address) {
-      await setBalance()
-      await setContract()
-    }
-  })
-
-  const disconnectButton = document.getElementById('disconnect-button');
-  if (disconnectButton) {
-    disconnectButton.addEventListener('click', async () => {
-      console.log("disconnect")
-      await disconnect()
-    })
-  }
-
 </script>
 
 {% schema %}
