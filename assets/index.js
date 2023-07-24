@@ -11,7 +11,7 @@ import { Web3Modal } from "https://unpkg.com/@web3modal/html@2.6.2";
 
 // 0. Import wagmi dependencies
 const { mainnet, polygon, avalanche, arbitrum, polygonMumbai } = WagmiCoreChains;
-const { configureChains, createConfig, watchAccount, watchNetwork, getWalletClient } = WagmiCore;
+const { configureChains, createConfig, watchAccount, watchNetwork, getWalletClient, disconnect } = WagmiCore;
 
 // 1. Define chains
 const chains = [mainnet, polygon, avalanche, arbitrum, polygonMumbai];
@@ -55,9 +55,11 @@ if (connectButton) {
 }
 
 watchAccount((account) => {
-  console.log(account)
+  console.log(account);
   if (account.address) {
     document.cookie = `account=${account.address}; path=/;`;
+  } else {
+    document.cookie = `account=; path=/;`;
   }
 })
 
@@ -65,5 +67,15 @@ watchNetwork((network) => {
   console.log(network)
   if (network) {
     document.cookie = `chainId=${network.chain.id}; path=/;`;
+  } else {
+    document.cookie = `chainId=; path=/;`;
   }
 })
+
+window.ethereum.on('accountsChanged', async (accounts) => {
+  if (accounts.length === 0) {
+    await disconnect()
+  } else if (accounts.length > 0) {
+
+  }
+});
