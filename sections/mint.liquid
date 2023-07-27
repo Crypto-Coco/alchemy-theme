@@ -13,6 +13,7 @@
           <div class="mint-date text-lg font-bold">{{ section.settings.end_date }}</div>
           <div class="mint-number text-2xl font-bold" id="supply">--</div>
 
+          {%- comment -%}TODO: unlimitedの場合はbarを隠す{%- endcomment -%}
           <div class="bar-box">
             {% assign bar_width = condition.supplyClaimed | divided_by: condition.maxClaimableSupply | times: 100 %}
             {% if bar_width >= 0 and bar_width <= 1 %}
@@ -53,11 +54,11 @@
 
             <form class="mint-form" onsubmit="mint" style="display: none;">
               <div class="number-input-box">
-                <button id="decrement-button" class="number-input-button">
+                <button id="decrement-button" class="number-input-button" type="button">
                   <img class="number-input-button-icon" src="{{ 'minus.svg' | asset_url }}" />
                 </button>
                 <input id="mint-number-input" class="number-input" min="1" max="{{ condition.quantityLimitPerWallet }}" type="number" />
-                <button id="increment-button" class="number-input-button">
+                <button id="increment-button" class="number-input-button" type="button">
                   <img class="number-input-button-icon" src="{{ 'plus.svg' | asset_url }}" />
                 </button>
               </div>
@@ -302,14 +303,15 @@
     getPublicClient,
     disconnect,
     getNetwork,
-    switchNetwork
+    switchNetwork,
+    waitForTransaction
   } = WagmiCore;
   import { web3Modal } from "{{ 'index.js' | asset_url }}"
   const btn = document.getElementById('mint-button');
 
   const abi = {{ settings.primary_collection.abi }}
   const chainId = {{ settings.primary_collection.chain.id }}
-  let condition;
+  let condition
 
   async function handleConnectedWallet(account) {
     try {
@@ -332,7 +334,7 @@
 
         connectedWallet.addEventListener('click', async () => {
           await web3Modal.openModal()
-        }) 
+        })
       } else {
         connectedWallet.style.display = 'none';
       }
@@ -343,11 +345,15 @@
 
   function handleActionsSection(account) {
     try {
+      const connectButton = document.getElementById('connect-button');
       if (account.address) {
-        const connectButton = document.getElementById('connect-button');
         const mintForm = document.querySelector('.mint-form');
         connectButton.style.display = 'none';
         mintForm.style.display = 'flex';
+      } else {
+        const mintForm = document.querySelector('.mint-form');
+        connectButton.style.display = 'flex';
+        mintForm.style.display = 'none';
       }
     } catch (err) {
       console.error(err)
@@ -359,7 +365,7 @@
     handleActionsSection(account)
   })
 
-  async function initialize() {
+  async function setSupply() {
     try {
       const publicClient =  getPublicClient({
         chainId
@@ -404,7 +410,7 @@
       const price = pricePerToken * quantity
       const quantityLimitPerWallet = Number(condition.quantityLimitPerWallet.toString())
 
-      const res = await writeContract({
+      const { hash } = await writeContract({
         address: '{{ settings.primary_collection.contract_address }}',
         abi: {{ settings.primary_collection.abi }},
         functionName: 'claim',
@@ -420,11 +426,26 @@
         ],
         value: (price * 10 ** 18).toString() // native token value
       })
+      console.log("hash", hash)
+      const res = await waitForTransaction({
+        hash
+      })
       console.log(res)
-      // TODO: ミントが完了した場合の処理
+      new Notify({
+        title: 'Mint is completed',
+        status: "success",
+        autoclose: true,
+        autotimeout: 5000
+      })
+      await setSupply()
     } catch (err) {
       // TODO: エラーハンドリング
       console.log("err", err)
+      new Notify({
+        title: 'Mint is failed',
+        text: "If you do not know the cause, please contact us.",
+        status: "error",
+      })
     } finally {
       btn.disabled = false
       btn.querySelector('.loader').style.display = 'none'
@@ -461,7 +482,7 @@
     });
   }
 
-  await initialize()
+  await setSupply()
 </script>
 
 {% schema %}
@@ -478,7 +499,7 @@
         "type": "image_picker",
         "id": "featured_image",
         "label": "Featured Image",
-        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/secret.png"
+        "default": "https://i.seadn.io/s/primary-drops/0x7bfd9a55f4c00783b5a8ea18f7735e1a405dd520/27671181:about:preview_media:477169ed-9748-4b66-a3b0-a8f9f6799e36.gif?auto=format&dpr=1&w=1920"
       },
       {
         "type": "text",
