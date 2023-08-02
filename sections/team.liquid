@@ -2,24 +2,38 @@
   <h2 class="team-title">Team</h2>
 
   <div class="team-cards">
-    {% render 'member-card',
-      image: section.settings.card_image1,
-      name: section.settings.card_name1,
-      title: section.settings.card_title1,
-      twitter_id: section.settings.card_twitter_id1,
-    %}
-    {% render 'member-card',
-      image: section.settings.card_image2,
-      name: section.settings.card_name2,
-      title: section.settings.card_title2,
-      twitter_id: section.settings.card_twitter_id2,
-    %}
-    {% render 'member-card',
-      image: section.settings.card_image3,
-      name: section.settings.card_name3,
-      title: section.settings.card_title3,
-      twitter_id: section.settings.card_twitter_id3,
-    %}
+    {% if section.settings.is_display_1 %}
+      {% render 'member-card',
+        image: section.settings.card_image1,
+        name: section.settings.card_name1,
+        title: section.settings.card_title1,
+        twitter_id: section.settings.card_twitter_id1,
+      %}
+    {% endif %}
+    {% if section.settings.is_display_2 %}
+      {% render 'member-card',
+        image: section.settings.card_image2,
+        name: section.settings.card_name2,
+        title: section.settings.card_title2,
+        twitter_id: section.settings.card_twitter_id2,
+      %}
+    {% endif %}
+    {% if section.settings.is_display_3 %}
+      {% render 'member-card',
+        image: section.settings.card_image3,
+        name: section.settings.card_name3,
+        title: section.settings.card_title3,
+        twitter_id: section.settings.card_twitter_id3,
+      %}
+    {% endif %}
+    {% if section.settings.is_display_4 %}
+      {% render 'member-card',
+        image: section.settings.card_image4,
+        name: section.settings.card_name4,
+        title: section.settings.card_title4,
+        twitter_id: section.settings.card_twitter_id4,
+      %}
+    {% endif %}
   </div>
 </section>
 
@@ -50,6 +64,12 @@
   "name": "Team",
   "settings": [
     {
+      "type": "checkbox",
+      "id": "is_display_1",
+      "label": "Display First Card",
+      "default": "true"
+    },
+    {
       "type": "image_picker",
       "id": "card_image1",
       "label": "Member Image 1",
@@ -71,6 +91,12 @@
       "type": "text",
       "id": "card_twitter_id1",
       "label": "Member Twitter ID 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_display_2",
+      "label": "Display Second Card",
+      "default": "true"
     },
     {
       "type": "image_picker",
@@ -96,6 +122,12 @@
       "label": "Member Twitter ID 2"
     },
     {
+      "type": "checkbox",
+      "id": "is_display_3",
+      "label": "Display Third Card",
+      "default": "true"
+    },
+    {
       "type": "image_picker",
       "id": "card_image3",
       "label": "Member Image 3",
@@ -117,6 +149,35 @@
       "type": "text",
       "id": "card_twitter_id3",
       "label": "Member Twitter ID 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_display_4",
+      "label": "Display Fourth Card",
+      "default": "true"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image4",
+      "label": "Member Image 4",
+      "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/v1/member1.jpeg"
+    },
+    {
+      "type": "text",
+      "id": "card_name4",
+      "label": "Member Name 4",
+      "default": "Member Name C"
+    },
+    {
+      "type": "text",
+      "id": "card_title4",
+      "label": "Member Title 4",
+      "default": "Director of Marketing"
+    },
+    {
+      "type": "text",
+      "id": "card_twitter_id4",
+      "label": "Member Twitter ID 4"
     }
   ]
 }

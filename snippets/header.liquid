@@ -2,15 +2,21 @@
   <img class="header-logo" src="{{ settings.header_logo }}" />
 
   <nav class="nav">
-    <a href="{{ settings.opensea_link }}" target="_blank">
-      <img class="header-icon" src="{{ "opensea-icon-white.svg" | asset_url }}" />
-    </a>
-    <a href="{{ settings.twitter_link }}" target="_blank">
-      <img class="header-icon" src="{{ "twitter.svg" | asset_url }}" />
-    </a>
-    <a href="{{ settings.discord_link }}" target="_blank">
-      <img class="header-icon" src="{{ "discord.svg" | asset_url }}" />
-    </a>
+    {% if settings.opensea_link != null %}
+      <a href="{{ settings.opensea_link }}" target="_blank">
+        <img class="header-icon" src="{{ "opensea-icon-white.svg" | asset_url }}" />
+      </a>
+    {% endif %}
+    {% if settings.twitter_link != null %}
+      <a href="{{ settings.twitter_link }}" target="_blank">
+        <img class="header-icon" src="{{ "twitter.svg" | asset_url }}" />
+      </a>
+    {% endif %}
+    {% if settings.discord_link %}
+      <a href="{{ settings.discord_link }}" target="_blank">
+        <img class="header-icon" src="{{ "discord.svg" | asset_url }}" />
+      </a>
+    {% endif %}
 
     <a class="header-txt" href="#mint">Mint</a>
     <a class="header-txt" href="#roadmap">Roadmap</a>

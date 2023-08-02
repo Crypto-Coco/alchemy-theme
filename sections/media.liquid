@@ -1,22 +1,26 @@
 <section class="media">
-  {% render 'media-block',
-    fluffy1_color: section.settings.first_fluffy_color1,
-    fluffy2_color: section.settings.second_fluffy_color1,
-    left_image: section.settings.is_left_image1,
-    image: section.settings.image1,
-    title: section.settings.title1,
-    subtitle: section.settings.subtitle1,
-    description: section.settings.description1
-  %}
-  {% render 'media-block',
-    fluffy1_color: section.settings.first_fluffy_color2,
-    fluffy2_color: section.settings.second_fluffy_color2,
-    left_image: section.settings.is_left_image2,
-    image: section.settings.image2,
-    title: section.settings.title2,
-    subtitle: section.settings.subtitle2,
-    description: section.settings.description2
-  %}
+  {% if section.settings.is_display_first %}
+    {% render 'media-block',
+      fluffy1_color: section.settings.first_fluffy_color1,
+      fluffy2_color: section.settings.second_fluffy_color1,
+      left_image: section.settings.is_left_image1,
+      image: section.settings.image1,
+      title: section.settings.title1,
+      subtitle: section.settings.subtitle1,
+      description: section.settings.description1
+    %}
+  {% endif %}
+  {% if section.settings.is_display_second %}
+    {% render 'media-block',
+      fluffy1_color: section.settings.first_fluffy_color2,
+      fluffy2_color: section.settings.second_fluffy_color2,
+      left_image: section.settings.is_left_image2,
+      image: section.settings.image2,
+      title: section.settings.title2,
+      subtitle: section.settings.subtitle2,
+      description: section.settings.description2
+    %}
+  {% endif %}
 </section>
 
 <style>
@@ -41,6 +45,12 @@
   {
     "name": "Media Block",
     "settings": [
+      {
+        "type": "checkbox",
+        "id": "is_display_first",
+        "label": "Display First Media",
+        "default": "true"
+      },
       {
         "type": "checkbox",
         "id": "is_left_image1",
@@ -82,6 +92,12 @@
         "id": "second_fluffy_color1",
         "label": "Second Fluffy Color",
         "default": "#BADAF1"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_display_second",
+        "label": "Display Second Media",
+        "default": "true"
       },
       {
         "type": "checkbox",

@@ -2,24 +2,30 @@
   <h2 class="section-title section-title-center">{{ section.settings.title }}</h2>
 
   <div class="roadmap-cards">
-    {% render 'media-card',
-      title: section.settings.card_title1,
-      subtitle: section.settings.card_subtitle1,
-      description: section.settings.card_description1,
-      image: section.settings.card_image1
-    %}
-    {% render 'media-card',
-      title: section.settings.card_title2,
-      subtitle: section.settings.card_subtitle2,
-      description: section.settings.card_description2,
-      image: section.settings.card_image2
-    %}
-    {% render 'media-card',
-      title: section.settings.card_title3,
-      subtitle: section.settings.card_subtitle3,
-      description: section.settings.card_description3,
-      image: section.settings.card_image3
-    %}
+    {% if section.settings.is_display_first %}
+      {% render 'media-card',
+        title: section.settings.card_title1,
+        subtitle: section.settings.card_subtitle1,
+        description: section.settings.card_description1,
+        image: section.settings.card_image1
+      %}  
+    {% endif %}
+    {% if section.settings.is_display_second %}
+      {% render 'media-card',
+        title: section.settings.card_title2,
+        subtitle: section.settings.card_subtitle2,
+        description: section.settings.card_description2,
+        image: section.settings.card_image2
+      %}
+    {% endif %}
+    {% if section.settings.is_display_third %}
+      {% render 'media-card',
+        title: section.settings.card_title3,
+        subtitle: section.settings.card_subtitle3,
+        description: section.settings.card_description3,
+        image: section.settings.card_image3
+      %}
+    {% endif %}
   </div>
 </section>
 
@@ -61,6 +67,12 @@
       "default": "Roadmap"
     },
     {
+      "type": "checkbox",
+      "id": "is_display_first",
+      "label": "Display First Card",
+      "default": "true"
+    },
+    {
       "type": "image_picker",
       "id": "card_image1",
       "label": "Card Image 1",
@@ -85,6 +97,12 @@
       "default": "We launch limited edition SAYC NFTs and create community spaces to foster engagement. We also seek partnerships with blockchain entities and host our first online community event."
     },
     {
+      "type": "checkbox",
+      "id": "is_display_second",
+      "label": "Display Second Card",
+      "default": "true"
+    },
+    {
       "type": "image_picker",
       "id": "card_image2",
       "label": "Card Image 2",
@@ -107,6 +125,12 @@
       "id": "card_description2",
       "label": "Card Description 2",
       "default": "SAYC integrates with popular metaverses, introduces limited edition merchandise, organizes a larger community event, and conducts airdrops to thank and incentivize our community."
+    },
+    {
+      "type": "checkbox",
+      "id": "is_display_third",
+      "label": "Display Third Card",
+      "default": "true"
     },
     {
       "type": "image_picker",
