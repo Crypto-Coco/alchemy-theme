@@ -10,13 +10,13 @@
 
       <div class="footer-links">
         <a href="{{ settings.opensea_link }}" target="_blank">
-          {% render 'opensea-icon', fill_color: settings.footer_color %}
+          {% render 'opensea-icon', fill_color: settings.footer_text_color %}
         </a>
         <a href="{{ settings.twitter_link }}" target="_blank">
-          {% render 'twitter-icon', fill_color: settings.footer_color %}
+          {% render 'twitter-icon', fill_color: settings.footer_text_color %}
         </a>
         <a href="{{ settings.discord_link }}" target="_blank">
-          {% render 'discord-icon', fill_color: settings.footer_color %}
+          {% render 'discord-icon', fill_color: settings.footer_text_color %}
         </a>
       </div>
     </div>
@@ -30,7 +30,7 @@
 <style>
   .footer {
     padding-top: 80px;
-    background: #EDEDFF;
+    background: {{ settings.footer_background_color }};
   }
 
   .footer-top {
@@ -47,7 +47,7 @@
   }
 
   .footer-title {
-    color: {{ settings.footer_color }};
+    color: {{ settings.footer_text_color }};
     font-size: 48px;
     font-weight: 700;
   }
@@ -61,7 +61,7 @@
   .footer-right-text {
     font-size: 28px;
     text-align: center;
-    color: {{ settings.footer_color }};
+    color: {{ settings.footer_text_color }};
     margin-bottom: 32px;
   }
 

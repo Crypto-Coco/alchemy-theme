@@ -2,17 +2,22 @@
   {%- comment -%}TODO: Imageも対応{%- endcomment -%}
   <div class="hero-video-cover"></div>
 
-  <div class="hero-video-container">
-    <video
-      autoplay
-      loop
-      playsinline
-      muted
-      poster="https://image.mux.com/jaQzSff8YZIIfVjYM3RRAkGeZf02yOLUETPxPw4ZTAs4/thumbnail.jpg?auto=format&amp;dpr=1&amp;w=2560"
-      class="hero-video">
-      <source src="https://stream.mux.com/jaQzSff8YZIIfVjYM3RRAkGeZf02yOLUETPxPw4ZTAs4/high.mp4" type="video/mp4">
-    </video>
-  </div>
+  {% if section.settings.is_video %}
+    <div class="hero-video-container">
+      <video
+        autoplay
+        loop
+        playsinline
+        muted
+        class="hero-video">
+        <source src="{{ section.settings.hero_video }}" type="video/mp4">
+      </video>
+    </div>
+  {% else %}
+    <div class="hero-image-container">
+      <img class="hero-image" src="{{ section.settings.hero_image }}" />
+    </div>
+  {% endif %}
 
   <div class="hero-txt-container">
     <h1>{{ section.settings.title }}</h1>
@@ -63,6 +68,23 @@
     width: 177.778vh;
     min-height: 56.25vw;
     max-width: none;
+  }
+
+  .hero-image-container {
+    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .hero-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 
   .hero-txt-container {
@@ -135,12 +157,31 @@
         "type": "text",
         "id": "title",
         "label": "Title",
-        "default": "Skyborne - Nexian Gems"
-      }, {
+        "default": "WELCOME TO THE SAYC"
+      },
+      {
         "type": "text",
         "id": "description",
         "label": "Description",
-        "default": "Nexian Gems is a Proof of Collective within the Skyborne Legacy ecosystem."
+        "default": "The Sleepy Ape Yacht Club is a collection of 10,000 unique NFTs"
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_image",
+        "label": "Hero Image",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/skyborne-legacy.avif"
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_video",
+        "label": "Hero Video",
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/v1/video.mp4"
+      },
+      {
+        "type": "checkbox",
+        "id": "is_video",
+        "label": "Is Video",
+        "default": "true"
       }
     ]
   }

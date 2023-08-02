@@ -17,13 +17,13 @@
         "label": "Footer Title",
         "id": "footer_title",
         "type": "text",
-        "default": "Skyborne"
+        "default": "SAYC"
       },
       {
         "label": "Footer Description",
         "id": "footer_description",
         "type": "text",
-        "default": "Alice is a digital art collection and global community of creators, developers, entrepreneurs, athletes, artists, experimenters and innovators."
+        "default": "SAYC is a digital art collection and global community of creators, developers, entrepreneurs, athletes, artists, experimenters and innovators."
       },
       {
         "label": "Footer Right Text",
@@ -35,13 +35,19 @@
         "label": "Footer Copyright",
         "id": "footer_copyright",
         "type": "text",
-        "default": "@2023 Nexian Gems"
+        "default": "@2023 SAYC"
       },
       {
-        "label": "Footer Color",
-        "id": "footer_color",
+        "label": "Footer Text Color",
+        "id": "footer_text_color",
         "type": "color_picker",
         "default": "#515DD0"
+      },
+      {
+        "label": "Footer Background Color",
+        "id": "footer_background_color",
+        "type": "color_picker",
+        "default": "#EDEDFF"
       }
     ]
   },
@@ -72,6 +78,29 @@
         "label": "Discord Link",
         "id": "discord_link",
         "type": "text"
+      }
+    ]
+  },
+  {
+    "name": "Gradiend colors",
+    "settings": [
+      {
+        "label": "Gradient Color 1",
+        "id": "gradient_color_1",
+        "type": "color_picker",
+        "default": "rgb(175, 64, 255)"
+      },
+      {
+        "label": "Gradient Color 2",
+        "id": "gradient_color_2",
+        "type": "color_picker",
+        "default": "rgba(91, 66, 242, 0.84)"
+      },
+      {
+        "label": "Gradient Color 3",
+        "id": "gradient_color_3",
+        "type": "color_picker",
+        "default": "rgba(0, 221, 235, 0.50)"
       }
     ]
   }
