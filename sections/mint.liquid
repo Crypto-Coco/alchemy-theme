@@ -438,13 +438,14 @@
 
   async function setSupply() {
     try {
-      const isUnlimited = condition.maxClaimableSupply.toString() === maxInt
+      const newCondition = await getCondition()
+      const isUnlimited = newCondition.maxClaimableSupply.toString() === maxInt
       const supplyElement = document.getElementById('supply')
       const barBox = document.getElementById('bar-box');
       if (isUnlimited) {
-        supplyElement.innerText = `${condition.supplyClaimed.toString()} / Unlimited`
+        supplyElement.innerText = `${newCondition.supplyClaimed.toString()} / Unlimited`
       } else {
-        supplyElement.innerText = `${condition.supplyClaimed.toString()} / ${condition.maxClaimableSupply.toString()}`
+        supplyElement.innerText = `${newCondition.supplyClaimed.toString()} / ${newCondition.maxClaimableSupply.toString()}`
         barBox.style.display = 'block'
       }
     } catch (err) {
@@ -454,24 +455,22 @@
 
   async function setConditionInfo(account) {
     const conditionInfo = document.getElementById('condition-info');
+    conditionInfo.innerHTML = '';
 
-    const limitP = document.createElement('p');
+    const p = document.createElement('p');
+    p.classList.add('text-xs');
     if (condition.quantityLimitPerWallet.toString() == maxInt) {
-      limitP.innerText = `Limit: Unlimited`;
+      p.innerText = `Limit: Unlimited`;
     } else {
-      limitP.innerText = `Limit ${condition.quantityLimitPerWallet.toString()} per wallet`;
+      p.innerText = `Limit ${condition.quantityLimitPerWallet.toString()} per wallet`;
     }
-    limitP.classList.add('text-sm');
-    conditionInfo.appendChild(limitP);
 
     if (account.address) {
-      const claimedP = document.createElement('p');
       const supplyClaimed = await readContract.read.getSupplyClaimedByWallet([{{ section.settings.active_condition_id }}, account.address])
       const supplyClaimedNumber = Number(supplyClaimed)
-      claimedP.innerText = `Calimed by you: ${supplyClaimedNumber}`;
-      claimedP.classList.add('text-sm');
-      conditionInfo.appendChild(claimedP);
+      p.innerText = p.innerText + ` / Calimed by you: ${supplyClaimedNumber}`;
     }
+    conditionInfo.appendChild(p);
   }
 
   async function mint(e) {
