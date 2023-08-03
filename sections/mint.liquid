@@ -3,11 +3,8 @@
 
   <div class="mint-container">
     <img class="featured-image" src="{{ section.settings.featured_image }}" />
-    {% assign activeConditionId = 0 %}
-    {% fetch activeId = getActiveClaimConditionId, chain_id: "{{ settings.primary_collection.chain.id }}", contract_address: "{{ settings.primary_collection.contract_address }}" %}
-      {% assign activeConditionId = activeId %}
-    {% endfetch %}
-    {% fetch condition = getClaimConditionById, chain_id: "{{ settings.primary_collection.chain.id }}", contract_address: "{{ settings.primary_collection.contract_address }}" | args: '{{ activeConditionId }}' %}
+
+    {% fetch condition = getClaimConditionById, chain_id: "{{ settings.primary_collection.chain.id }}", contract_address: "{{ settings.primary_collection.contract_address }}" | args: '{{ section.settings.active_condition_id }}' %}
       <div class="mint-info-container">
         <div class="top">
           <div class="mint-date text-lg font-bold">{{ section.settings.end_date }}</div>
@@ -36,38 +33,72 @@
         </div>
 
         <div class="bottom">
-          <div class="connected-wallet" id="connected-wallet" style="display: none;">
-            <div class="left-box">
-              <img src="{{ 'wallet.svg' | asset_url }}" class="wallet-icon" />
-              <div class="connected-wallet-address"></div>
+          <div id="before-mint" style="display: none;">
+            <h3 class="text-md font-middle">Up to the start time</h3>
+
+            <div class="count-boxes">
+              <div class="count-box" id="days-count">
+                <div class="text-lg font-middle count">-</div>
+                <div class="text-md">days</div>
+              </div>
+              <div class="count-box" id="hours-count">
+                <div class="text-lg font-middle count">-</div>
+                <div class="text-md">hours</div>
+              </div>
+              <div class="count-box" id="mins-count">
+                <div class="text-lg font-middle count">-</div>
+                <div class="text-md">mins</div>
+              </div>
+              <div class="count-box" id="secs-count">
+                <div class="text-lg font-middle count">-</div>
+                <div class="text-md">secs</div>
+              </div>
             </div>
-
-            <div class="divider"></div>
-
-            <div class="right-box" id="balance"></div>
           </div>
 
-          <div id="actions">
-            <button class="gradient-button" id="connect-button">
-              Connect Wallet
-            </button>
-
-            <form class="mint-form" onsubmit="mint" style="display: none;">
-              <div class="number-input-box">
-                <button id="decrement-button" class="number-input-button" type="button">
-                  <img class="number-input-button-icon" src="{{ 'minus.svg' | asset_url }}" />
-                </button>
-                <input id="mint-number-input" class="number-input" min="1" max="{{ condition.quantityLimitPerWallet }}" type="number" />
-                <button id="increment-button" class="number-input-button" type="button">
-                  <img class="number-input-button-icon" src="{{ 'plus.svg' | asset_url }}" />
-                </button>
+          <div id="on-mint" style="display: none;">
+            <div class="connected-wallet" id="connected-wallet" style="display: none;">
+              <div class="left-box">
+                <img src="{{ 'wallet.svg' | asset_url }}" class="wallet-icon" />
+                <div class="connected-wallet-address"></div>
               </div>
 
-              <button class="gradient-button" id="mint-button" type="submit">
-                Mint
-                <span class="loader" style="display: none;"></span>
+              <div class="divider"></div>
+
+              <div class="right-box" id="balance"></div>
+            </div>
+
+            <div id="actions">
+              <button class="gradient-button" id="connect-button">
+                Connect Wallet
               </button>
-            </form>
+
+              <form class="mint-form" onsubmit="mint" style="display: none;">
+                <div class="number-input-box">
+                  <button id="decrement-button" class="number-input-button" type="button">
+                    <img class="number-input-button-icon" src="{{ 'minus.svg' | asset_url }}" />
+                  </button>
+                  <input id="mint-number-input" class="number-input" min="1" max="{{ condition.quantityLimitPerWallet }}" type="number" />
+                  <button id="increment-button" class="number-input-button" type="button">
+                    <img class="number-input-button-icon" src="{{ 'plus.svg' | asset_url }}" />
+                  </button>
+                </div>
+
+                <button class="gradient-button" id="mint-button" type="submit">
+                  Mint
+                  <span class="loader" style="display: none;"></span>
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div id="after-mint" style="display: none;">
+            <p class="text-md font-middle">Items have been sold out!</p>
+            {% if settings.opensea_link != null %}
+              <a class="view-opensea-link" href="{{ settings.opensea_link }}">
+                <button class="gradient-button">View on OpenSea</button>
+              </a>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -146,42 +177,6 @@
     font-weight: 400;
   }
 
-  .connected-wallet {
-    border-radius: var(--rounded-lg);
-    padding: 12px 24px;
-    border: 1px solid var(--line-primary);
-    font-size: 16px;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: fit-content;
-    gap: 24px;
-    margin-bottom: 32px;
-    cursor: pointer;
-  }
-
-  .connected-wallet:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
-  .wallet-icon {
-    width: 22px;
-    height: 26px;
-  }
-
-  .connected-wallet .left-box {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .connected-wallet .divider {
-    width: 1px;
-    height: 29px;
-    background: var(--line-primary);
-  }
-
   .mint-form {
     display: flex;
     gap: 24px;
@@ -239,6 +234,28 @@
   .number-input-button-icon {
     height: 8px;
     width: 8px;
+  }
+
+  .count-boxes {
+    display: flex;
+    gap: 32px;
+    margin-top: 24px;
+  }
+
+  .count-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 130px;
+    padding: 20px 0;
+    border-radius: var(--rounded-lg);
+    background-color: #F0F0FF;
+  }
+
+  .view-opensea-link {
+    display: inline-block;
+    margin-top: 32px;
   }
 
   @media screen and (max-width: 768px) {
@@ -311,16 +328,86 @@
 
   const abi = {{ settings.primary_collection.abi }}
   const chainId = {{ settings.primary_collection.chain.id }}
-  let condition
+  const publicClient = getPublicClient({
+    chainId
+  })
+  const readContract = getContract({
+    address: '{{ settings.primary_collection.contract_address }}',
+    abi,
+    chainId
+  }, publicClient);
 
-  async function handleConnectedWallet(account) {
+  watchAccount(async (account) => {
+    await initConnectedWalletElement(account)
+    handleActionsSection(account)
+  })
+
+  async function getCondition() {
+    const condition = await readContract.read.getClaimConditionById([{{ section.settings.active_condition_id }}])
+    return condition
+  }
+
+  const condition = await getCondition()
+
+  async function setMintStatus() {
+    try {
+      if (condition.startTimestamp > Date.now() / 1000) {
+        console.log("mint is not started")
+        document.getElementById('before-mint').style.display = 'block';
+        const countdownInterval = setInterval(() => countDownTo(Number(condition.startTimestamp)), 1000);
+      } else if (condition.maxClaimableSupply === condition.supplyClaimed) {
+        console.log("mint is ended")
+        document.getElementById('after-mint').style.display = 'block';
+      } else {
+        console.log("mint is active")
+        document.getElementById('on-mint').style.display = 'block';
+      }
+      
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  await setMintStatus()
+
+  function countDownTo(timestamp) {
+    const daysCount = document.getElementById('days-count').querySelector('.count');
+    const hoursCount = document.getElementById('hours-count').querySelector('.count');
+    const minsCount = document.getElementById('mins-count').querySelector('.count');
+    const secsCount = document.getElementById('secs-count').querySelector('.count');
+
+    const now = new Date().getTime();
+    const distance = timestamp * 1000 - now;
+
+    // calculate time for days, hours, minutes and seconds
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    daysCount.textContent = days;
+    hoursCount.textContent = hours;
+    minsCount.textContent = minutes;
+    secsCount.textContent = seconds;
+
+    if (distance < 0) {
+      clearInterval(countdownInterval);
+      daysCount.textContent = 0;
+      hoursCount.textContent = 0;
+      minsCount.textContent = 0;
+      secsCount.textContent = 0;
+      document.getElementById('before-mint').style.display = 'none';
+      document.getElementById('on-mint').style.display = 'block';
+    }
+  }
+
+  async function initConnectedWalletElement(account) {
     try {
       const connectedWallet = document.getElementById('connected-wallet');
       if (account.address) {
         // Get balance
         const balance = document.getElementById('balance');
         const address = account.address
-        console.log("address", address)
         const res = await fetchBalance({
           address,
           chainId
@@ -360,11 +447,6 @@
     }
   }
 
-  watchAccount(async (account) => {
-    await handleConnectedWallet(account)
-    handleActionsSection(account)
-  })
-
   async function setSupply() {
     try {
       const publicClient =  getPublicClient({
@@ -376,11 +458,9 @@
         abi,
         chainId
       }, publicClient);
-      
-      condition = await readContract.read.getClaimConditionById([1])
+
       const maxInt = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
       document.getElementById('supply').innerText = condition.maxClaimableSupply.toString() === maxInt ? `${condition.supplyClaimed.toString()} / Unlimited` : `${condition.supplyClaimed.toString()} / ${condition.maxClaimableSupply.toString()}`
-      console.log("condition", condition)
     } catch (err) {
       console.error(err)
     }
@@ -439,7 +519,6 @@
       })
       await setSupply()
     } catch (err) {
-      // TODO: エラーハンドリング
       console.log("err", err)
       new Notify({
         title: 'Mint is failed',
@@ -506,6 +585,12 @@
         "id": "end_date",
         "label": "End Date",
         "default": "Mint ends 2023, July 18 at 11:00 PM"
+      },
+      {
+        "type": "text",
+        "id": "active_condition_id",
+        "label": "Active Condition ID",
+        "default": "0"
       }
     ]
   }

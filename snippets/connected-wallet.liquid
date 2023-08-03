@@ -1,0 +1,48 @@
+<div class="connected-wallet" id="connected-wallet" style="display: none;">
+  <div class="left-box">
+    <img src="{{ 'wallet.svg' | asset_url }}" class="wallet-icon" />
+    <div class="connected-wallet-address"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="right-box" id="balance"></div>
+</div>
+
+<style>
+  .connected-wallet {
+    border-radius: var(--rounded-lg);
+    padding: 12px 24px;
+    border: 1px solid var(--line-primary);
+    font-size: 16px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
+    gap: 24px;
+    margin-bottom: 32px;
+    cursor: pointer;
+  }
+
+  .connected-wallet:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .wallet-icon {
+    width: 22px;
+    height: 26px;
+  }
+
+  .connected-wallet .left-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .connected-wallet .divider {
+    width: 1px;
+    height: 29px;
+    background: var(--line-primary);
+  }
+</style>
