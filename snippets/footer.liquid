@@ -9,15 +9,21 @@
       <h3 class="footer-right-text">{{ settings.footer_right_text }}</h3>
 
       <div class="footer-links">
-        <a href="{{ settings.opensea_link }}" target="_blank">
-          {% render 'opensea-icon', fill_color: settings.footer_text_color %}
-        </a>
-        <a href="{{ settings.twitter_link }}" target="_blank">
-          {% render 'twitter-icon', fill_color: settings.footer_text_color %}
-        </a>
-        <a href="{{ settings.discord_link }}" target="_blank">
-          {% render 'discord-icon', fill_color: settings.footer_text_color %}
-        </a>
+        {% if settings.opensea_link %}
+          <a href="{{ settings.opensea_link }}" target="_blank">
+            {% render 'opensea-icon', fill_color: settings.footer_text_color %}
+          </a>
+        {% endif %}
+        {% if settings.twitter_link %}
+          <a href="{{ settings.twitter_link }}" target="_blank">
+            {% render 'twitter-icon', fill_color: settings.footer_text_color %}
+          </a>
+        {% endif %}
+        {% if settings.discord_link %}
+          <a href="{{ settings.discord_link }}" target="_blank">
+            {% render 'discord-icon', fill_color: settings.footer_text_color %}
+          </a>
+        {% endif %}
       </div>
     </div>
   </div>

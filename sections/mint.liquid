@@ -461,6 +461,7 @@
     } else {
       limitP.innerText = `Limit ${condition.quantityLimitPerWallet.toString()} per wallet`;
     }
+    limitP.classList.add('text-sm');
     conditionInfo.appendChild(limitP);
 
     if (account.address) {
@@ -468,6 +469,7 @@
       const supplyClaimed = await readContract.read.getSupplyClaimedByWallet([{{ section.settings.active_condition_id }}, account.address])
       const supplyClaimedNumber = Number(supplyClaimed)
       claimedP.innerText = `Calimed by you: ${supplyClaimedNumber}`;
+      claimedP.classList.add('text-sm');
       conditionInfo.appendChild(claimedP);
     }
   }
