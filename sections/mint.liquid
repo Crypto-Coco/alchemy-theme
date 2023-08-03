@@ -25,9 +25,7 @@
             </div>
           </div>
 
-          <div class="description">
-            {%- comment -%}TODO: 残りのミントできる個数を表示 & number inputの上限のバリデーションも変更{%- endcomment -%}
-            <p>Limit {{ condition.quantityLimitPerWallet }} per wallet</p>
+          <div class="description" id="condition-info">
           </div>
         </div>
 
@@ -56,16 +54,7 @@
           </div>
 
           <div id="on-mint" style="display: none;">
-            <div class="connected-wallet" id="connected-wallet" style="display: none;">
-              <div class="left-box">
-                <img src="{{ 'wallet.svg' | asset_url }}" class="wallet-icon" />
-                <div class="connected-wallet-address"></div>
-              </div>
-
-              <div class="divider"></div>
-
-              <div class="right-box" id="balance"></div>
-            </div>
+            {% render 'connected-wallet' %}
 
             <div id="actions">
               <button class="gradient-button" id="connect-button">
@@ -324,6 +313,7 @@
   } = WagmiCore;
   import { web3Modal } from "{{ 'index.js' | asset_url }}"
   const btn = document.getElementById('mint-button');
+  const maxInt = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
 
   const abi = {{ settings.primary_collection.abi }}
   const chainId = {{ settings.primary_collection.chain.id }}
@@ -335,9 +325,14 @@
     abi,
     chainId
   }, publicClient);
+  let condition;
 
   watchAccount(async (account) => {
+    condition = await getCondition()
     await initConnectedWalletElement(account)
+    await setConditionInfo(account)
+    await setMintStatus()
+    await setSupply()
     handleActionsSection(account)
   })
 
@@ -345,8 +340,6 @@
     const condition = await readContract.read.getClaimConditionById([{{ section.settings.active_condition_id }}])
     return condition
   }
-
-  const condition = await getCondition()
 
   async function setMintStatus() {
     try {
@@ -361,13 +354,10 @@
         console.log("mint is active")
         document.getElementById('on-mint').style.display = 'block';
       }
-      
     } catch (e) {
       console.error(e)
     }
   }
-
-  await setMintStatus()
 
   function countDownTo(timestamp) {
     const daysCount = document.getElementById('days-count').querySelector('.count');
@@ -448,17 +438,6 @@
 
   async function setSupply() {
     try {
-      const publicClient =  getPublicClient({
-        chainId
-      })
-  
-      const readContract = getContract({
-        address: '{{ settings.primary_collection.contract_address }}',
-        abi,
-        chainId
-      }, publicClient);
-
-      const maxInt = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
       const isUnlimited = condition.maxClaimableSupply.toString() === maxInt
       const supplyElement = document.getElementById('supply')
       const barBox = document.getElementById('bar-box');
@@ -470,6 +449,26 @@
       }
     } catch (err) {
       console.error(err)
+    }
+  }
+
+  async function setConditionInfo(account) {
+    const conditionInfo = document.getElementById('condition-info');
+
+    const limitP = document.createElement('p');
+    if (condition.quantityLimitPerWallet.toString() == maxInt) {
+      limitP.innerText = `Limit: Unlimited`;
+    } else {
+      limitP.innerText = `Limit ${condition.quantityLimitPerWallet.toString()} per wallet`;
+    }
+    conditionInfo.appendChild(limitP);
+
+    if (account.address) {
+      const claimedP = document.createElement('p');
+      const supplyClaimed = await readContract.read.getSupplyClaimedByWallet([{{ section.settings.active_condition_id }}, account.address])
+      const supplyClaimedNumber = Number(supplyClaimed)
+      claimedP.innerText = `Calimed by you: ${supplyClaimedNumber}`;
+      conditionInfo.appendChild(claimedP);
     }
   }
 
@@ -567,8 +566,6 @@
       }
     });
   }
-
-  await setSupply()
 </script>
 
 {% schema %}
