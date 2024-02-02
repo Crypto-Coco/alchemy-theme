@@ -6,7 +6,7 @@
         "label": "Header Logo",
         "id": "header_logo",
         "type": "image_picker",
-        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/logo.png"
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/v1/logo.png"
       }
     ]
   },

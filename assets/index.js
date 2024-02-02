@@ -58,6 +58,7 @@ watchAccount((account) => {
   console.log(account);
   if (account.address) {
     document.cookie = `account=${account.address}; path=/;`;
+    
   } else {
     document.cookie = `account=; path=/;`;
   }
