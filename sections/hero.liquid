@@ -27,12 +27,13 @@
 <style>
   .hero {
     min-height: calc(41.6vw);
-    margin-top: -82px;
     position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 80px;
+    padding-bottom: 80px;
   }
 
   .hero-video-cover {
@@ -168,10 +169,10 @@
         "type": "image_picker",
         "id": "hero_image",
         "label": "Hero Image",
-        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/skyborne-legacy.avif"
+        "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/v1/pixel2.jpeg"
       },
       {
-        "type": "image_picker",
+        "type": "video",
         "id": "hero_video",
         "label": "Hero Video",
         "default": "https://dev-cocoshop-images.s3.us-east-2.amazonaws.com/alchemy/v1/video.mp4"

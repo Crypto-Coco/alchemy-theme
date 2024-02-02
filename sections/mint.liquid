@@ -4,24 +4,28 @@
   <div class="mint-container">
     <img class="featured-image" src="{{ section.settings.featured_image }}" />
 
-    {% fetch condition = getClaimConditionById, chain_id: "{{ settings.primary_collection.chain.id }}", contract_address: "{{ settings.primary_collection.contract_address }}" | args: '{{ section.settings.active_condition_id }}' %}
       <div class="mint-info-container">
         <div class="top">
-          <div class="mint-date text-lg font-bold">{{ section.settings.end_date }}</div>
-          <div class="mint-number text-2xl font-bold" id="supply">--</div>
+          <div class="mint-date text-lg font-bold"></div>
 
-          <div class="bar-box" id="bar-box" style="display: none;">
-            {% assign bar_width = condition.supplyClaimed | divided_by: condition.maxClaimableSupply | times: 100 %}
-            {% if bar_width >= 0 and bar_width <= 1 %}
-              <div class="bar" style="width: 1%;"></div>
-            {% else %}
-              <div class="bar" style="width: {{ bar_width }}%;"></div>
-            {% endif %}
-          </div>
+          {% if active_claim_condition.wait_in_seconds == 0 %}
+            <div class="mint-number text-2xl font-bold" id="supply">{{ active_claim_condition.current_mint_supply  }} / {{ active_claim_condition.available_supply }}</div>
+            <div class="bar-box" id="bar-box">
+              {% assign bar_width = active_claim_condition.current_mint_supply | divided_by: active_claim_condition.max_claimable_supply | times: 100 %}
+              {% if bar_width >= 0 and bar_width <= 1 %}
+                <div class="bar" style="width: 1%;"></div>
+              {% else %}
+                <div class="bar" style="width: {{ bar_width }}%;"></div>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="mint-date text-lg font-bold">{{ active_claim_condition.wait_in_seconds | format_to_time }}</div>
+          {% endif %}
+
 
           <div class="price-container">
             <div class="crypto-price">
-              {{ condition.pricePerToken | format_to_ether }} MATIC
+              {{ active_claim_condition.currency_metadata.displayValue }} {{ active_claim_condition.currency_metadata.symbol }}
             </div>
           </div>
 
@@ -53,15 +57,16 @@
             </div>
           </div>
 
-          <div id="on-mint" style="display: none;">
+          {% if connected_wallet == nil %}
+          <button class="gradient-button" id="connect-button">
+            Connect Wallet
+          </button>
+          {% else %}
+          <div id="on-mint">
             {% render 'connected-wallet' %}
 
             <div id="actions">
-              <button class="gradient-button" id="connect-button">
-                Connect Wallet
-              </button>
-
-              <form class="mint-form" onsubmit="mint" style="display: none;">
+              <form class="mint-form" onsubmit="mint">
                 <div class="number-input-box">
                   <button id="decrement-button" class="number-input-button" type="button">
                     <img class="number-input-button-icon" src="{{ 'minus.svg' | asset_url }}" />
@@ -79,6 +84,7 @@
               </form>
             </div>
           </div>
+          {% endif %}
 
           <div id="after-mint" style="display: none;">
             <p class="text-md font-middle">Items have been sold out!</p>
@@ -90,7 +96,7 @@
           </div>
         </div>
       </div>
-    {% endfetch %}
+    {% comment %} {% endfetch %} {% endcomment %}
   </div>
 </section>
 
@@ -342,21 +348,21 @@
   }
 
   async function setMintStatus() {
-    try {
-      if (condition.startTimestamp > Date.now() / 1000) {
-        console.log("mint is not started")
-        document.getElementById('before-mint').style.display = 'block';
-        const countdownInterval = setInterval(() => countDownTo(Number(condition.startTimestamp)), 1000);
-      } else if (condition.maxClaimableSupply === condition.supplyClaimed) {
-        console.log("mint is ended")
-        document.getElementById('after-mint').style.display = 'block';
-      } else {
-        console.log("mint is active")
-        document.getElementById('on-mint').style.display = 'block';
-      }
-    } catch (e) {
-      console.error(e)
-    }
+    // try {
+    //   if (condition.startTimestamp > Date.now() / 1000) {
+    //     console.log("mint is not started")
+    //     document.getElementById('before-mint').style.display = 'block';
+    //     const countdownInterval = setInterval(() => countDownTo(Number(condition.startTimestamp)), 1000);
+    //   } else if (condition.maxClaimableSupply === condition.supplyClaimed) {
+    //     console.log("mint is ended")
+    //     document.getElementById('after-mint').style.display = 'block';
+    //   } else {
+    //     console.log("mint is active")
+    //     document.getElementById('on-mint').style.display = 'block';
+    //   }
+    // } catch (e) {
+    //   console.error(e)
+    // }
   }
 
   function countDownTo(timestamp) {
@@ -392,6 +398,7 @@
 
   async function initConnectedWalletElement(account) {
     try {
+      console.log("account", account)
       const connectedWallet = document.getElementById('connected-wallet');
       if (account.address) {
         // Get balance
@@ -437,20 +444,20 @@
   }
 
   async function setSupply() {
-    try {
-      const newCondition = await getCondition()
-      const isUnlimited = newCondition.maxClaimableSupply.toString() === maxInt
-      const supplyElement = document.getElementById('supply')
-      const barBox = document.getElementById('bar-box');
-      if (isUnlimited) {
-        supplyElement.innerText = `${newCondition.supplyClaimed.toString()} / Unlimited`
-      } else {
-        supplyElement.innerText = `${newCondition.supplyClaimed.toString()} / ${newCondition.maxClaimableSupply.toString()}`
-        barBox.style.display = 'block'
-      }
-    } catch (err) {
-      console.error(err)
-    }
+    // try {
+    //   const newCondition = await getCondition()
+    //   const isUnlimited = newCondition.maxClaimableSupply.toString() === maxInt
+    //   const supplyElement = document.getElementById('supply')
+    //   const barBox = document.getElementById('bar-box');
+    //   if (isUnlimited) {
+    //     supplyElement.innerText = `${newCondition.supplyClaimed.toString()} / Unlimited`
+    //   } else {
+    //     supplyElement.innerText = `${newCondition.supplyClaimed.toString()} / ${newCondition.maxClaimableSupply.toString()}`
+    //     barBox.style.display = 'block'
+    //   }
+    // } catch (err) {
+    //   console.error(err)
+    // }
   }
 
   async function setConditionInfo(account) {
